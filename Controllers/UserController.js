@@ -68,7 +68,7 @@ const uploadProfileImage = async(req,res) => {
         );
 
         if (!updatedUser) {
-            return res.status(404).json({ message: "User not found!" });
+            return res.status(404).send({ message: "User not found!",status:false });
         }
 
         res.status(201).send({ 
@@ -76,12 +76,28 @@ const uploadProfileImage = async(req,res) => {
             imageUrl: updatedUser.profileImage 
         });
     } catch (error) {
-        res.status(500).send({ error: "Failed to upload image!" });
+        return res.status(500).send({ error: "Failed to upload image!" ,error,status:false});
+    }
+}
+
+const getUser = async(req,res)=>{
+    try{
+        const id = req.user._id;
+        
+        const user = await UserModel.findOne({_id:id});
+        
+        if(user)
+            return res.status(200).send({user,status:true});
+        else 
+            return res.status(408).send({message:'User Not Found',status:true});
+    }catch(err){
+        return res.status(500).send({ error: "Error at getUser",error:err,status:false });  
     }
 }
 
 module.exports = {
     signUp,
     login,
-    uploadProfileImage
+    uploadProfileImage,
+    getUser
 };
