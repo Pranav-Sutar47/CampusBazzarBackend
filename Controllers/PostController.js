@@ -1,3 +1,4 @@
+const sendEmailToUsers = require('../config/emailService');
 const PostModel = require('../Models/PostModel');
 const UserModel = require('../Models/UserModel');
 
@@ -16,13 +17,16 @@ const addPost = async(req,res)=>{
 
         const result = await newPost.save();
 
-        if(result)
+        const users = await UserModel.find({}, "email");
+
+        if(result){
+            await sendEmailToUsers(users, result);
             res.status(201).send({
-                message: "Post added successfully!",
+                message: "Post added successfully! & Emails Sent!",
                 post: newPost,
                 status:true
             });
-        else 
+        }else 
             return res.status(408).send({message:'Error while storing posts',status:false});
     }catch(err){
         return res.status(500).send({message:'Error at addPost',status:false,error: err.message || JSON.stringify(err, null, 2)});
