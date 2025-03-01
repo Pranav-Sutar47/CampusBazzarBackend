@@ -12,7 +12,7 @@ const loginValidation =(req,res,next)=>{
         const {error} = schema.validate(req.body);
 
         if(error)
-            return res.status(407).send({error:error,message:'Login Validation Error',status:false});
+            return res.status(408).send({error:error,message:'Login Validation Error',status:false});
         next();
     }catch(err){
         return res.status(500).send({error:err,status:false,message:'Error at loginValidation'});
@@ -34,7 +34,7 @@ const signUpValidation = (req,res,next) => {
         const {error} = schema.validate(req.body);
 
         if(error)
-            return res.status(407).send({error:error,message:'SignUp Validation Error',status:false});
+            return res.status(408).send({error:error,message:'SignUp Validation Error',status:false});
 
         next();
     }catch(err){

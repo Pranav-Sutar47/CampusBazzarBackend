@@ -1,9 +1,10 @@
 const PostModel = require('../Models/PostModel');
+const UserModel = require('../Models/UserModel');
 
 const addPost = async(req,res)=>{
     try{
         const imageUrls = req.files.map(file => file.path);
-        //console.log('images',imageUrls);
+
         const newPost = new PostModel({
             userId : req.user._id,
             title: req.body.title,
@@ -12,7 +13,7 @@ const addPost = async(req,res)=>{
             category: req.body.category,
             images: imageUrls 
         });
-        // console.log('hi');
+
         const result = await newPost.save();
 
         if(result)
@@ -30,12 +31,10 @@ const addPost = async(req,res)=>{
 
 const getPost = async(req,res)=>{
     try{
-
-        const posts = await PostModel.find();
-        // const posts = await PostModel.find()
-        //     .populate('userId', 'name email mobileNo address college prn profileImage') // Fetch user details
-        //     .lean()
-        //     .exec();
+        const posts = await PostModel.find()
+            .populate('userId', 'name email mobileNo address college prn profileImage') 
+            .lean()
+            .exec();
 
         
         if (!posts.length) {
@@ -49,7 +48,22 @@ const getPost = async(req,res)=>{
     }
 }
 
+const deletePost = async(req,res)=>{
+    try{
+        const id = req.params.id;
+        const result = await PostModel.findOneAndDelete({_id:id});
+
+        if(result)
+            return res.status(200).send({message:'Post Deleted Successfully',status:true});
+        else    
+            return res.status(403).send({message:'Error while deleting post',status:false});
+    }catch(err){
+        return res.status(500).send({message:'Error at deletePost',status:false,error:err});   
+    }
+}
+
 module.exports = {
     addPost,
-    getPost
+    getPost,
+    deletePost
 }
