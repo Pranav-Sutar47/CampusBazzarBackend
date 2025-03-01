@@ -51,7 +51,37 @@ const login = async(req,res) => {
     }
 }
 
+const uploadProfileImage = async(req,res) => {
+    try {
+        console.log(req.user);
+        if (!req.file) {
+            return res.status(400).send({ message: "No file uploaded!" });
+        }
+
+        const userId = req.user._id; 
+        const imageUrl = req.file.path;
+
+        const updatedUser = await UserModel.findByIdAndUpdate(
+            userId,
+            { profileImage: imageUrl },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found!" });
+        }
+
+        res.status(201).send({ 
+            message: "Image uploaded successfully!", 
+            imageUrl: updatedUser.profileImage 
+        });
+    } catch (error) {
+        res.status(500).send({ error: "Failed to upload image!" });
+    }
+}
+
 module.exports = {
     signUp,
-    login
+    login,
+    uploadProfileImage
 };

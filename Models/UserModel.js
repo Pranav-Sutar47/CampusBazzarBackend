@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {UserDB} = require('./Config');
+const {MainDB} = require('./Config');
 
 const UserSchema = mongoose.Schema({
     name:{
@@ -46,6 +46,6 @@ const UserSchema = mongoose.Schema({
     }
 },{ timestamps: true });
 
-const UserModel = UserDB.model('users',UserSchema);
+const UserModel = MainDB.model('users',UserSchema);
 
 module.exports = UserModel;

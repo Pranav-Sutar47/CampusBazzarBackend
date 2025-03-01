@@ -42,7 +42,24 @@ const signUpValidation = (req,res,next) => {
     }
 }
 
+const tokenValidation = (req,res,next)=>{
+    try{
+        const token = req.headers['authorization']?.split(' ')[1];
+        if(!token)
+            return res.status(403).send({message:'Token Required'});
+        jwt.verify(token,process.env.JWTSECRET,(err,decoded)=>{
+            if(err)
+                return res.status(401).send({message:'Invalid token',err});
+            req.user = decoded;
+            next();
+        });
+    }catch(err){
+        return res.status(500).json({message:'Owner Validation Error',err,success:false});
+    }
+}
+
 module.exports = {
     loginValidation,
-    signUpValidation
+    signUpValidation,
+    tokenValidation
 }

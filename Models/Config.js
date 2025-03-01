@@ -1,17 +1,18 @@
 const mongoose = require('mongoose');
 
-const USERURL = String(process.env.USER_URL);
+const MAINURL = String(process.env.MAIN_URL);
 
-const UserDB = mongoose.createConnection(USERURL);
+const MainDB = mongoose.createConnection(MAINURL);
 
-UserDB.on('connected',()=>{
-    console.log('User DB Connected');
+MainDB.on('connected',()=>{
+    console.log('Main DB Connected');
 })
 
-UserDB.on('error',(err)=>{
-    console.log('User DB error:',err);
-});
+MainDB.on('error',(err)=>{
+    console.log('Main DB error',err);
+})
+
 
 module.exports = {
-    UserDB
+    MainDB
 }
