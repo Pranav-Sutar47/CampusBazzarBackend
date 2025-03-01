@@ -5,7 +5,12 @@ require('dotenv').config();
 const app = express();
 const cors = require('cors');
 
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:3000", 
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+}));
+
 app.use(express.json());
 
 require('./Models/Config');
@@ -19,7 +24,7 @@ app.use('/api/user',require('./Routes/User'));
 app.use('/api/posts',require('./Routes/Posts'));
 
 //Search Routes
-app.use('/search',require('./Routes/Search'));
+app.use('/api/search',require('./Routes/Search'));
 
 app.listen(PORT,'0.0.0.0',()=>{
     console.log(`Server Up and Listen on ${PORT}`)

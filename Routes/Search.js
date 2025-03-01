@@ -4,6 +4,6 @@ const { searchCategories } = require('../Controllers/SearchController');
 
 const router = express.Router();
 
-router.get('/:category',tokenValidation,searchCategories);
+router.get('/:category',searchCategories);
 
 module.exports = router;

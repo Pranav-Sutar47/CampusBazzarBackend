@@ -1,8 +1,12 @@
+const PostModel = require("../Models/PostModel");
+
 const searchCategories = async(req,res)=>{
     try{
         const category = req.params.category;
-    
-        const posts = await PostModel.find({category})
+        
+        console.log(category);
+
+        const posts = await PostModel.find({category:category})
         .populate('userId', 'name email mobileNo address college prn profileImage') 
         .lean()
         .exec();
