@@ -66,8 +66,26 @@ const deletePost = async(req,res)=>{
     }
 }
 
+const addLike = async(req,res)=>{
+    try{
+        const id = req.params.id;
+        const updatedPost = await PostModel.findByIdAndUpdate(
+            id, 
+            { $inc: { likeCount: 1 } }, 
+            { new: true }
+        );
+        if(updatedPost)
+            return res.status(201).send({message:'Like added',status:true});
+        else 
+            return res.status(408).send({message:'Like Count Error',status:false});
+    }catch(err){
+        return res.status(500).send({message:'Error at Post Like',status:false,error:err});    
+    }
+}
+
 module.exports = {
     addPost,
     getPost,
-    deletePost
+    deletePost,
+    addLike
 }
