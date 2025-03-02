@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('/add',tokenValidation,upload.array('images',5),addPostValidation,addPost);
 
-router.get('/get',tokenValidation,getPost);
+router.get('/get',getPost);
 
 router.delete('/delete/:id',tokenValidation,deletePost);
 
