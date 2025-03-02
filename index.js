@@ -4,6 +4,7 @@ require('dotenv').config();
 
 const app = express();
 const cors = require('cors');
+const axios = require('axios');
 
 app.use(cors({
     origin: "http://localhost:3000", 
