@@ -26,6 +26,18 @@ app.use('/api/posts',require('./Routes/Posts'));
 //Search Routes
 app.use('/api/search',require('./Routes/Search'));
 
+app.get('/ping', (req, res) => {
+    res.send('Server is alive');
+});
+
+
+
 app.listen(PORT,'0.0.0.0',()=>{
-    console.log(`Server Up and Listen on ${PORT}`)
+    console.log(`Server Up and Listen on ${PORT}`);
+    setInterval(() => {
+            axios
+            .get(URL/ping)
+            .then(() => console.log("Self-ping successful"))
+            .catch((err) => console.error("Self-ping failed:", err.message));
+    }, 3 *60*1000);
 });
