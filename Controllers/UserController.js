@@ -45,7 +45,7 @@ const login = async(req,res) => {
 
             return res.status(201).send({message:'Login Successful !',status:true,token});
         }else 
-            return res.status(200).send({message:'User not Found !',status:true});
+            return res.status(200).send({message:'User not Found !',status:false});
     }catch(err){
         return res.status(500).send({message:'Error at login controller',status:false,error:err})
     }
@@ -89,7 +89,7 @@ const getUser = async(req,res)=>{
         if(user)
             return res.status(200).send({user,status:true});
         else 
-            return res.status(408).send({message:'User Not Found',status:true});
+            return res.status(408).send({message:'User Not Found',status:false});
     }catch(err){
         return res.status(500).send({ error: "Error at getUser",error:err,status:false });  
     }
