@@ -12,7 +12,7 @@ const addPostValidation = (req,res,next) => {
         const {error} = schema.validate(req.body);
 
         if(error)
-            return res.status(403).send({message:'Validation error at Addpost',status:false});
+            return res.status(403).send({message:'Validation error at Addpost',status:false,error});
         
         if (!req.files || req.files.length === 0) {
             return res.status(400).json({ message: "At least one image is required!" });
