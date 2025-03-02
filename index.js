@@ -7,9 +7,11 @@ const cors = require('cors');
 const axios = require('axios');
 
 app.use(cors({
-    origin: "http://localhost:3000", 
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: "*", // Allow all origins
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allow all HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow necessary headers
+    credentials: true, // Allow cookies & authorization headers
+    optionsSuccessStatus: 200 // Fix preflight issues for older browsers
 }));
 
 app.use(express.json());
