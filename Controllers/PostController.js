@@ -33,6 +33,23 @@ const addPost = async(req,res)=>{
     }
 }
 
+const getUserPost = async(req,res)=>{
+    try{
+        
+        const id = req.user._id;
+        
+        const posts = await PostModel.find({userId:id});
+
+        if (!posts.length) {
+            return res.status(200).send({ message: "No posts found", status: false });
+        }
+
+        return res.status(200).send({ posts, status: true });
+    }catch(err){
+        return res.status(500).send({message:'Error at getUserPost',status:false,error:err});    
+    }
+}
+
 const getPost = async(req,res)=>{
     try{
         const posts = await PostModel.find()
@@ -87,5 +104,6 @@ module.exports = {
     addPost,
     getPost,
     deletePost,
-    addLike
+    addLike,
+    getUserPost
 }
